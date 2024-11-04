@@ -24,9 +24,55 @@ class EpochEndCallback(Callback):
               f"Validation Loss: {logs['val_loss']:.4f}, Validation Accuracy: {logs['val_accuracy']:.4f}")
 
 # Function to build the emotion model
-def emotion_model(): model = Sequential() # 1st CNN layer model.add(Conv2D(64, (3, 3), padding="same", input_shape=(48, 48, 1))) model.add(BatchNormalization()) model.add(Activation("relu")) model.add(MaxPooling2D(pool_size=(2, 2))) model.add(Dropout(0.25)) # 2nd CNN layer model.add(Conv2D(128, (5, 5), padding="same")) model.add(BatchNormalization()) model.add(Activation("relu")) model.add(MaxPooling2D(pool_size=(2, 2))) model.add(Dropout(0.25)) # 3rd CNN layer model.add(Conv2D(512, (3, 3), padding="same")) model.add(BatchNormalization()) model.add(Activation("relu")) model.add(MaxPooling2D(pool_size=(2, 2))) model.add(Dropout(0.25)) model.add(Flatten()) # Fully connected 1st layer model.add(Dense(256)) model.add(BatchNormalization()) model.add(Activation('relu')) model.add(Dropout(0.25)) # Fully connected 2nd layer model.add(Dense(512)) model.add(BatchNormalization()) model.add(Activation('relu')) model.add(Dropout(0.25)) # Fully connected 3rd layer model.add(Dense(64)) model.add(BatchNormalization()) model.add(Activation('relu')) model.add(Dropout(0.25)) # Output layer for 7 classes (emotions) model.add(Dense(7, activation='softmax'))
-
- return model
+def emotion_model():
+    model = Sequential()
+    
+    # 1st CNN layer
+    model.add(Conv2D(64, (3, 3), padding="same", input_shape=(48, 48, 1)))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    
+    # 2nd CNN layer
+    model.add(Conv2D(128, (5, 5), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    
+    # 3rd CNN layer
+    model.add(Conv2D(512, (3, 3), padding="same"))
+    model.add(BatchNormalization())
+    model.add(Activation("relu"))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    
+    # Flattening the model to prepare for fully connected layers
+    model.add(Flatten())
+    
+    # Fully connected 1st layer
+    model.add(Dense(256))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.25))
+    
+    # Fully connected 2nd layer
+    model.add(Dense(512))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.25))
+    
+    # Fully connected 3rd layer
+    model.add(Dense(64))
+    model.add(BatchNormalization())
+    model.add(Activation('relu'))
+    model.add(Dropout(0.25))
+    
+    # Output layer for 7 emotion classes
+    model.add(Dense(7, activation='softmax'))
+    
+    return model
 
 # Balance the dataset
 def balance_dataset(train_dir):
